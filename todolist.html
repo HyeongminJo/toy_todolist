@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My To Do List</title>
+    <script>
+        function addItem(){ 
+            let todo = document.getElementById("item");
+            // 입력값을 읽어와 todo 변수에 저장
+            let list = document.getElementById("todolist");
+            // ul 요소참조해 list 변수에 저장
+            let listitem = document.createElement("li");
+            // 새로운 li 생성해 listitem 변수에 저장
+            let xbtn = document.createElement("button");
+            // li x 버튼 생성
+
+            xbtn.className = "xbtn";
+            // x 버튼 클래스 네임 할당
+            xbtn.textContent = "X";
+
+            xbtn.onclick = function(e){
+                // x 버튼에 이벤트 추가
+                let pnode = e.target.parentNode;
+                list.removeChild(pnode);
+                // 이벤트가 발생한 li 요소를구해 ul 요소에서 제거
+                
+            }
+            listitem.innerText = todo.value;
+            //입력값을 li 태그 보디에 추가
+            listitem.appendChild(xbtn);
+            // li에 버튼 추가
+            list.appendChild(listitem);
+            // ul요소에 li 요소 추가
+            
+
+            todo.value = "";
+            todo.focus();
+            // 리스트 추가 후 input칸 비우기 및 포커스 이동
+            listitem.addEventListener("click",function(){ //할일 완료 후 클릭시 밑줄표시
+                listitem.style.textDecoration = "line-through";
+                listitem.style.color = "gray";
+            })
+            
+            
+        }
+
+        function removeAllList() {
+            const parent = document.getElementById('todolist');
+            while(parent.firstChild){
+                parent.removeChild(parent.firstChild);
+            }
+        }
+        
+    </script>
+    <link src="stylesheet" href="todolist.css">
+</head>
+<body>
+    <div class="containerbox">
+        <h2>My To Do List</h2>
+        <hr>
+        <div class="input-group">
+            <input type="text" id="item" class="inputctrl" placeholder="할일을 입력하세요">
+            <button type="button" class="plusbt" onclick="addItem()">+</button>
+        </div>
+        <hr>
+        <ul id="todolist" class="list-group"></ul>
+        <div>
+            <button type="button" id="allclear" onclick="removeAllList()">모두 삭제</button>
+        </div>
+    </div>
+</body>
+</html>
